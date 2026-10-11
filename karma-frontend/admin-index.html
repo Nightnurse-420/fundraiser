@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Admin dashboard | Karma</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="main-content" class="container section" data-page="admin-dashboard">
+      <div class="panel">
+        <p class="kicker">Overview</p>
+        <h1>Dashboard</h1>
+        <div class="stat-row">
+          <div class="stat-tile"><div class="stat-label">Donations</div><div class="stat-value" id="adminDonations">0</div></div>
+          <div class="stat-tile"><div class="stat-label">Unread messages</div><div class="stat-value" id="adminMessages">0</div></div>
+          <div class="stat-tile"><div class="stat-label">Active subscriptions</div><div class="stat-value" id="adminSubscriptions">0</div></div>
+          <div class="stat-tile"><div class="stat-label">Last 30 days</div><div class="stat-value" id="adminRaised">KES 0</div></div>
+        </div>
+      </div>
+    </main>
+    <script src="app.js"></script>
+    <script src="admin-dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Give securely to a campaign or the Karma general fund." />
+    <title>Donate | Karma</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <main id="main-content" data-page="donate">
+      <header class="page-header">
+        <div class="container">
+          <p class="kicker">Give securely</p>
+          <h1>Support the cause that matters most.</h1>
+        </div>
+      </header>
+      <section class="section" style="padding-top:0;">
+        <div class="container page-shell">
+          <div class="panel">
+            <form id="donationForm" class="form-grid" novalidate>
+              <div class="field">
+                <label for="amount">Amount</label>
+                <input id="amount" class="input" type="number" min="50" step="50" placeholder="5000" />
+              </div>
+              <div class="field">
+                <label for="currency">Currency</label>
+                <select id="currency" class="select">
+                  <option value="KES">KES</option>
+                  <option value="USD">USD</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="method">Payment method</label>
+                <select id="method" class="select">
+                  <option value="MPESA">M-Pesa</option>
+                  <option value="CARD">Card</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="name">Full name</label>
+                <input id="name" class="input" type="text" />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" class="input" type="email" />
+              </div>
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" class="input" type="tel" placeholder="07XXXXXXXX or +2547XXXXXXXX" />
+              </div>
+              <div class="field">
+                <label for="message">Message (optional)</label>
+                <textarea id="message" class="textarea" rows="4" maxlength="500"></textarea>
+              </div>
+              <label style="display:flex; gap:0.7rem; align-items:start;"><input id="anonymous" type="checkbox" /> <span>Keep my donation anonymous.</span></label>
+              <label style="display:flex; gap:0.7rem; align-items:start;"><input id="consent" type="checkbox" /> <span>I agree to receive updates and consent to this donation.</span></label>
+              <button class="btn btn-primary" type="submit">Complete donation</button>
+            </form>
+          </div>
+          <aside class="panel">
+            <p class="kicker">Your impact</p>
+            <h3 id="campaignTitle">Karma general fund</h3>
+            <p class="muted" id="campaignSummary">Your gift helps where the need is greatest.</p>
+            <div class="field">
+              <label for="campaignSelect">Campaign (optional)</label>
+              <select id="campaignSelect" class="select"><option value="">General fund</option></select>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <script src="app.js"></script>
+    <script src="donate.js"></script>
+  </body>
+</html>
