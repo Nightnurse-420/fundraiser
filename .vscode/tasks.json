@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "check-js",
+			"type": "shell",
+			"command": "node --check \"karma-frontend\\app.js\" && node --check \"karma-frontend\\campaigns.js\" && node --check \"karma-frontend\\campaign.js\" && node --check \"karma-frontend\\donate.js\" && node --check \"karma-frontend\\thank-you.js\" && node --check \"karma-frontend\\admin-login.js\" && node --check \"karma-frontend\\admin-dashboard.js\"",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "test"
+		}
+	]
+}
