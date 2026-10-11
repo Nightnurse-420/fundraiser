@@ -1,0 +1,138 @@
+generator client { provider = "prisma-client-js" }
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role { ADMIN }
+enum CampaignStatus { DRAFT ACTIVE COMPLETED CLOSED }
+enum DonationStatus { PENDING COMPLETED FAILED }
+enum PaymentMethod { MPESA CARD }
+enum Frequency { ONE_TIME MONTHLY }
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+  audits       AuditLog[]
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  campaigns   Campaign[]
+}
+
+model Campaign {
+  id            String         @id @default(cuid())
+  title         String
+  slug          String         @unique
+  summary       String
+  story         String
+  goal          Int
+  raised        Int            @default(0)
+  currency      String         @default("KES")
+  images        String[]
+  status        CampaignStatus @default(DRAFT)
+  beneficiary   String?
+  location      String?
+  peopleHelped  Int            @default(0)
+  startsAt      DateTime?
+  endsAt        DateTime?
+  categoryId    String
+  category      Category       @relation(fields: [categoryId], references: [id])
+  donations     Donation[]
+  subscriptions Subscription[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  @@index([status, createdAt])
+}
+
+model Donor {
+  id            String         @id @default(cuid())
+  email         String         @unique
+  name          String
+  phone         String?
+  consentAt     DateTime
+  anonymizedAt  DateTime?
+  createdAt     DateTime       @default(now())
+  donations     Donation[]
+  subscriptions Subscription[]
+}
+
+model Donation {
+  id          String         @id @default(cuid())
+  reference   String         @unique
+  amount      Int
+  currency    String         @default("KES")
+  frequency   Frequency      @default(ONE_TIME)
+  method      PaymentMethod
+  status      DonationStatus @default(PENDING)
+  anonymous   Boolean        @default(false)
+  message     String?
+  campaignId  String?
+  campaign    Campaign?      @relation(fields: [campaignId], references: [id])
+  donorId     String
+  donor       Donor          @relation(fields: [donorId], references: [id])
+  payment     Payment?
+  createdAt   DateTime       @default(now())
+  completedAt DateTime?
+  @@index([status, createdAt])
+  @@index([campaignId, status])
+}
+
+model Payment {
+  id          String   @id @default(cuid())
+  donationId  String   @unique
+  donation    Donation @relation(fields: [donationId], references: [id])
+  provider    String
+  providerRef String?
+  rawPayload  Json?
+  createdAt   DateTime @default(now())
+}
+
+model Subscription {
+  id          String    @id @default(cuid())
+  donorId     String
+  donor       Donor     @relation(fields: [donorId], references: [id])
+  campaignId  String?
+  campaign    Campaign? @relation(fields: [campaignId], references: [id])
+  amount      Int
+  currency    String    @default("KES")
+  provider    String
+  providerRef String?
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  action    String
+  entity    String
+  entityId  String?
+  meta      Json?
+  createdAt DateTime @default(now())
+}
